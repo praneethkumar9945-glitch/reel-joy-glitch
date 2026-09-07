@@ -1,24 +1,35 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "PRX — Artist · Creative · Storyteller" },
+      {
+        name: "description",
+        content:
+          "Welcome to my world. Cinematic portfolio of PRX — artist, creative, storyteller.",
+      },
+      { property: "og:title", content: "PRX — Artist · Creative · Storyteller" },
+      {
+        property: "og:description",
+        content: "Welcome to my world. Cinematic portfolio of PRX.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
+  useEffect(() => {
+    window.location.replace("/site/index.html");
+  }, []);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main style={{ minHeight: "100vh", background: "#000" }}>
+      <h1 className="sr-only">PRX — Artist, Creative, Storyteller</h1>
+    </main>
   );
 }
